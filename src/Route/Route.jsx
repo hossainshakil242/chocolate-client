@@ -12,7 +12,8 @@ import AddChocolate from "../pages/AddChocolate";
       children: [
         {
           path: '/chocolateShope',
-          element: <ChoclateShop></ChoclateShop>
+          element: <ChoclateShop></ChoclateShop>,
+          loader: ()=> fetch('http://localhost:5000/chocolates')
         },
         {
           path: '/addChocolate',

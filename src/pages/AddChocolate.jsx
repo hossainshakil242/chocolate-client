@@ -1,4 +1,4 @@
-import React from 'react';
+import Swal from 'sweetalert2'
 
 const AddChocolate = () => {
 
@@ -17,9 +17,27 @@ const AddChocolate = () => {
         const chocolateDiscription = form.chocolateDiscription.value;
 
 
-        const chocolate = { name, price, country, color, quantity, brand, date, file,photoUrl,chocolateDiscription }
+        const chocolate = { name, price, country, color, quantity, brand, date, file,photoUrl,chocolateDiscription };
 
         console.log(chocolate);
+
+        // send data server site 
+        fetch('http://localhost:5000/chocolates',{
+            method: 'POST',
+            headers : {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(chocolate)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            // console.log(data);
+            Swal.fire(
+                'Added Successfully!',
+                'You clicked the button!',
+                'success'
+              )
+        })
     }
     return (
         <div className='bg-[#7B3F00] m-5 md:m-12 rounded-xl'>
@@ -28,28 +46,28 @@ const AddChocolate = () => {
             <div className='p-5'>
                 <form className='space-y-2' onSubmit={handleAddNewChocololate}>
 
-                    {/* Chocolate Name and  */}
+                    {/* Chocolate Name and price  */}
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 justify-items-center'>
-                        <input type="text" name='name' placeholder="Chocolate Name" className="input input-bordered input-acent w-full" />
-                        <input type="text" name='price' placeholder="Chocolate Price" className="input input-bordered input-acent w-full" />
+                        <input type="text" name='name' placeholder="Chocolate Name" className="input input-bordered input-acent w-full" required />
+                        <input type="text" name='price' placeholder="Chocolate Price" defaultValue='$' className="input input-bordered input-acent w-full" required />
                     </div>
 
                     {/* Chocolate country and quantity */}
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 justify-items-center'>
-                        <select name='country' className="select select-acent w-full">
+                        <select name='country' className="select select-acent w-full" required>
                             <option disabled selected>Impot of Country</option>
                             <option value='Bangladesh'>Bangladesh</option>
                             <option value='India'>India</option>
                             <option value='America'>America</option>
                             <option value='Nepal'>Nepal</option>
                         </select>
-                        <input type="number" name='quantity' placeholder="Chocolate Quantity" className="input input-bordered input-acent w-full" />
+                        <input type="number" name='quantity' placeholder="Chocolate Quantity" className="input input-bordered input-acent w-full" required />
                     </div>
 
                     {/* Chocolate date url and brad name */}
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 justify-items-center'>
-                        <input type="date" name='date' placeholder="Buy Date" className="input input-bordered input-acent w-full" />
-                        <select name='brand' className="select select-acent w-full">
+                        <input type="date" name='date' placeholder="Buy Date" className="input input-bordered input-acent w-full" required />
+                        <select name='brand' className="select select-acent w-full" required>
                             <option disabled selected>Name Of Brand</option>
                             <option value='Toblerone'>Toblerone</option>
                             <option value='Cadbury'>Cadbury</option>
@@ -60,23 +78,23 @@ const AddChocolate = () => {
 
                     {/* Chocolate photo url and Color code */}
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 justify-items-center'>
-                        <select name='color' className="select select-acent w-full">
+                        <select name='color' className="select select-acent w-full" required>
                             <option disabled selected>Select Color</option>
                             <option value='Black'>Black</option>
                             <option value='Dark_Green'>Dark_Green</option>
                             <option value='Light'>Light</option>
                             <option value='Umber'>Umber</option>
                         </select>
-                        <input type="file" name='file' placeholder="Chocolate Quantity" className="input input-bordered input-acent w-full" />
+                        <input type="file" name='file' placeholder="Chocolate Quantity" className="input input-bordered input-acent w-full" required />
                     </div>
 
                     {/* Chocolate chocolate photo url */}
                     <div className='grid grid-cols-1 justify-items-center'>
-                    <input type="url" name='photoUrl' placeholder="Chocolate Photo URL" className="input input-bordered input-acent w-full" />
+                    <input type="url" name='photoUrl' placeholder="Chocolate Photo URL" className="input input-bordered input-acent w-full" required />
                     </div>
                     {/* Chocolate discriptions */}
                     <div className='grid grid-cols-1 justify-items-center'>
-                        <textarea name='chocolateDiscription' className="textarea textarea-bordered w-full" placeholder="Write Chocolate Discription Here....."></textarea>
+                        <textarea name='chocolateDiscription' required className="textarea textarea-bordered w-full" placeholder="Write Chocolate Discription Here....."></textarea>
                     </div>
 
 
